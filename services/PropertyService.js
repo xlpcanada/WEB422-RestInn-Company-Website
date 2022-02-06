@@ -1,5 +1,7 @@
 
 const propertyModel = require("../models/PropertyModel.js");
+const express = require("express");
+const app = express();
 
 
 //to receive request body and response data in json format

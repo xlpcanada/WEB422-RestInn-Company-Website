@@ -1,4 +1,7 @@
 const customerModel = require("../models/CustomerModel.js");
+const express = require("express");
+const app = express();
+
 
 //to receive request body and response data in json format
 app.use(express.json());
@@ -33,7 +36,7 @@ exports.createACustomer = async(req,res)=>{
             message:"Mandatory field is empty"
         });
     }
-    
+
 
     else{
         const customer = new customerModel(req.body);
