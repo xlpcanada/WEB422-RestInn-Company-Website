@@ -5,24 +5,39 @@ const propertyModel = require("../models/PropertyModel.js");
 //to receive request body and response data in json format
 app.use(express.json());
 
+//to handle regular text form data and access data on req.body
+app.use(express.urlencoded({extended:true}));
 
+
+
+//----------------------service functions----------------------------------
 
 exports.createAProperty = async(req,res)=>{
 
-    const property = new propertyModel(req.body);
+    if(req.body.propertyTitle == null || req.body.propertyRentalPrice == null
+        ||req.body.propertyType == null){
 
-    property.save()
-    .then(newProperty=>{
         res.json({
-            message: "A property was successfully created.",
-            data: newProperty
+            message:"Mandatory field is empty"
+        });        
+    }
+    else{
+        const property = new propertyModel(req.body);
+
+        property.save()
+        .then(newProperty=>{
+            res.json({
+                message: "A property was successfully created.",
+                data: newProperty
+            })
         })
-    })
-    .catch(err=>{
-        res.status(500).json({
-            message:err
-          })
-    })
+        .catch(err=>{
+            res.status(500).json({
+                message:err
+            })
+        })
+
+    }
 };
 
 
