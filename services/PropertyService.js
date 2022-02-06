@@ -120,7 +120,7 @@ exports.getBestSellers = (req,res)=>{
     })
 };
 
-
+  
 
 
 exports.getPropertyById = (req,res)=>{
