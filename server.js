@@ -44,7 +44,7 @@ app.use((req, res) => {
 
 
 //---------------------------server start/initialize-----------------------------
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, async()=>{
 
     console.log(`Web Server is up and running on PORT : ${PORT}`);

@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const customerModel = require("../models/CustomerModel.js");
 const express = require("express");
 const app = express();
@@ -24,13 +25,7 @@ exports.getCustomerRegisterPage = ()=>{
 exports.createACustomer = async(req,res)=>{
 
 
-    if(req.body.password !== req.body.password2){
-        res.json({
-            message:"Passwords do not match"
-        });
-    }
-
-    else if(req.body.firstName == null || req.body.lastName == null
+    if(req.body.firstName == null || req.body.lastName == null
               ||req.body.email == null || req.body.password == null){
         res.json({
             message:"Mandatory field is empty"

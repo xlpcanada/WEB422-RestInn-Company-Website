@@ -11,7 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 
-
 //----------------------service functions----------------------------------
 
 exports.createAProperty = async(req,res)=>{
@@ -49,7 +48,7 @@ exports.getAllProperty = (req,res)=>{
     .then(properties=>{
           
         res.joson({
-            message: `A list of all the properties.`,
+            message: "A list of all the properties.",
             data: properties,
         })
     })
@@ -57,7 +56,7 @@ exports.getAllProperty = (req,res)=>{
         res.status(500).json({
             message:err
         })
-    })
+    });
 };
 
 
@@ -200,7 +199,7 @@ exports.deleteAProperty = (req,res)=>{
     .then(()=>{
 
         res.json({
-            message: `Ther property with the id ${req.params.id} was deleted.`
+            message: `The property with the id ${req.params.id} was deleted.`
         })
     })
     .catch(err=>{

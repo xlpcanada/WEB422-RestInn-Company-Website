@@ -2,13 +2,16 @@ const  mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const propertySchema = new Schema({
-  
+
+        id:{
+            type: Object
+        },
         propertyTitle : {
             type:String,
             required : true     
         },
         propertyRentalPrice : {
-            type:Number,
+            type: String,
             required : true
         },
 
@@ -26,11 +29,11 @@ const propertySchema = new Schema({
         amenities : [{
             type:String
         }],
-        location : {
-            type: String
-        },
         bestSellers : {
             type: Boolean
+        },
+        location : {
+            type: String
         },
         propertyPhotoURL : {
             type: String
