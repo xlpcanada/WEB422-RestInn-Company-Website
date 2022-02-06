@@ -29,7 +29,7 @@ const propertySchema = new Schema({
         location : {
             type: String
         },
-        bestSeller : {
+        bestSellers : {
             type: Boolean
         },
         propertyPhotoURL : {

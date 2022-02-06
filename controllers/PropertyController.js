@@ -1,30 +1,31 @@
 const express = require('express')
 const router = express.Router();
 
-const PropertyService = require("../services/PropertyService.js");
-
-// middleware that is specific to this router
-
-
-router.get("/", PropertyService.getAllProperty);
-
-router.get("/:id", PropertyService.getAProperty);
-
-router.post("/", PropertyService.createAProperty);
-
-router.put("/:id", PropertyService.updateAProperty);
-
-router.delete("/:id", PropertyService.deleteAProperty);
+const propertyService = require("../services/PropertyService.js");
 
 
 
-router.post("/types", PropertyService.getPropertyTypes);
 
-router.post("/:type", PropertyService.getPropertyByType);
+router.post("/", propertyService.createAProperty);
 
-router.post("/:location", PropertyService.getPropertyByLocation);
+router.get("/", propertyService.getAllProperty);
 
-router.post("/bestSellers", PropertyService.getBestSellers);
+router.get("/types", propertyService.getPropertyTypes);
+
+router.get("/:type", propertyService.getPropertyByType);
+
+router.get("/:location", propertyService.getPropertyByLocation);
+
+router.get("/bestSellers", propertyService.getBestSellers);
+
+
+router.get("/:id", propertyService.getPropertyById);
+
+router.put("/:id", propertyService.updateAProperty);
+
+router.delete("/:id", propertyService.deleteAProperty);
+
+
 
 
 

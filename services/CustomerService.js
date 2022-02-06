@@ -1,9 +1,31 @@
 const customerModel = require("../models/CustomerModel.js");
 
-exports.getACustomer = (req,res)=>{
+//to receive request body and response data in json format
+app.use(express.json());
 
-    res.json({
-        message : `This is a get request with the id ${req.params.id}`
+
+
+exports.getCustomerById = (req,res)=>{
+
+    customerModel.findById(req.params.id)
+    .then(customer=>{
+
+        if(customer){
+            res.joson({
+                message : `Customer with the id ${req.params.id}`,
+                data: customer
+            })
+        }
+        else{
+            res.status(404).json({
+                message: `There is no such customer with the id ${req.params.id} in our database.`
+            })
+        }
+    })
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+          })
     })
 
 };

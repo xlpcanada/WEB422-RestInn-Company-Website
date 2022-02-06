@@ -3,10 +3,10 @@ const router = express.Router();
 
 const CustomerService = require("../services/CustomerService.js");
 
-// middleware that is specific to this router
 
 
-router.get("/:id", CustomerService.getACustomer);
+
+router.get("/:id", CustomerService.getCustomerById);
 
 
 module.exports = router;

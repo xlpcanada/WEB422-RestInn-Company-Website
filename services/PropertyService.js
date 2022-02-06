@@ -1,94 +1,197 @@
-const PropertyModel = require("../models/PropertyModel.js");
+
+const propertyModel = require("../models/PropertyModel.js");
 
 
-exports.getAllProperty = (req,res)=>{
+//to receive request body and response data in json format
+app.use(express.json());
 
-      //  new PropertyModel(req.body)
-
-        res.json({
-            message : "Spiderman nno way was an AWESOME MOVIE. YOU SHOULD IT"
-        })
-
-};
-
-exports.getAProperty = (req,res)=>{
-
-    res.json({
-        message : `This is a get request with the id ${req.params.id}`
-    })
-
-};
 
 
 exports.createAProperty = async(req,res)=>{
 
-    res.json({
-        message : "The Property was created successful ",
-       
+    const property = new propertyModel(req.body);
+
+    property.save()
+    .then(newProperty=>{
+        res.json({
+            message: "A property was successfully created.",
+            data: newProperty
+        })
     })
-
-
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+          })
+    })
 };
 
-exports.updateAProperty = (req,res)=>{
 
-    res.json({
-        message : `This is a PUT request with the id ${req.params.id}`
+
+exports.getAllProperty = (req,res)=>{
+    propertyModel.find()
+    .then(properties=>{
+          
+        res.joson({
+            message: `A list of all the properties.`,
+            data: properties,
+        })
     })
-
-
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+        })
+    })
 };
 
-exports.deleteAProperty = (req,res)=>{
-
-    res.json({
-        message : `This is a DELETE request with the id ${req.params.id}`
-    })
-
-
-};
 
 
 exports.getPropertyTypes = (req,res)=>{
 
-    res.json({
-        message : `This is a request that retrieves all the properties types`
+    propertyModel.find({}, 'propertyType')
+    .then(properties=>{
+          
+        res.joson({
+            message: `All the property types.`,
+            data: properties,
+        })
     })
-
-
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+        })
+    })
 };
+
 
 
 exports.getPropertyByType = (req,res)=>{
 
-    res.json({
-        message : `This is a request that retrieves all properties that 
-            belong to a specified type ${req.params.type}`
+    propertyModel.find({propertyType: req.params.type})
+    .then(properties=>{
+          
+        res.joson({
+            message: `All the properties with the type ${req.params.type}.`,
+            data: properties,
+        })
     })
-
-
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+        })
+    })
 };
+
 
 
 
 exports.getPropertyByLocation = (req,res)=>{
 
-    res.json({
-        message : `This is a request that retrieves all properties that 
-            belong to a specified location ${req.params.location}`
+    propertyModel.find({location: req.params.location})
+    .then(properties=>{
+          
+        res.joson({
+            message: `All the properties with the location ${req.params.location}.`,
+            data: properties,
+        })
     })
-
-
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+        })
+    })
 };
-
 
 
 
 exports.getBestSellers = (req,res)=>{
 
-    res.json({
-        message : `This is a request that retrieves all properties marked as bestsellers`
+    propertyModel.find({bestSellers:true})
+    .then(properties=>{
+          
+        res.joson({
+            message: `All the properties marked as bestsellers.`,
+            data: properties,
+        })
     })
-
-
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+        })
+    })
 };
+
+
+
+
+exports.getPropertyById = (req,res)=>{
+
+    propertyModel.findById(req.params.id)
+    .then(property=>{
+
+        if(property){
+            res.joson({
+                message : `Property with the id ${req.params.id}`,
+                data: property
+            })
+        }
+        else{
+            res.status(404).json({
+                message: `There is no such property with the id ${req.params.id} in our database.`
+            })
+        }
+    })
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+          })
+    })
+};
+
+
+
+
+exports.updateAProperty = (req,res)=>{
+
+    propertyModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    .then(property=>{
+
+        if(property){
+            res.joson({
+                message : `Property with the id ${req.params.id} was updated`,
+                data: property
+            })
+        }
+        else{
+            res.status(404).json({
+                message: `There is no such property with the id ${req.params.id} in our database.`
+            })
+        }
+    })
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+          })
+    })
+};
+
+
+
+
+exports.deleteAProperty = (req,res)=>{
+
+    propertyModel.findByIdAndRemove(req.params.id)
+    .then(()=>{
+
+        res.json({
+            message: `Ther property with the id ${req.params.id} was deleted.`
+        })
+    })
+    .catch(err=>{
+        res.status(500).json({
+            message:err
+          })
+    })
+};
+
+
+
