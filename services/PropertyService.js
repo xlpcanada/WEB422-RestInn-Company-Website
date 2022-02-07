@@ -15,14 +15,6 @@ app.use(express.urlencoded({extended:true}));
 
 exports.createAProperty = async(req,res)=>{
 
-    if(req.body.propertyTitle == null || req.body.propertyRentalPrice == null
-        ||req.body.propertyType == null){
-
-        res.json({
-            message:"Mandatory field is empty"
-        });        
-    }
-    else{
         const property = new propertyModel(req.body);
 
         property.save()
@@ -38,7 +30,6 @@ exports.createAProperty = async(req,res)=>{
             })
         })
 
-    }
 };
 
 

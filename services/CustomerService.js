@@ -16,15 +16,6 @@ app.use(express.urlencoded({extended:true}));
 exports.createACustomer = async(req,res)=>{
 
 
-    if(req.body.firstName == null || req.body.lastName == null
-              ||req.body.email == null || req.body.password == null){
-        res.json({
-            message:"Mandatory field is empty"
-        });
-    }
-
-
-    else{
         const customer = new customerModel(req.body);
 
         bcrypt.genSalt(10)  
@@ -52,7 +43,7 @@ exports.createACustomer = async(req,res)=>{
             })
         })
 
-    }
+    
 
 };
 
