@@ -6,8 +6,8 @@ const customerService = require("../services/CustomerService.js");
 
 
 
-router.get("/:id", customerService.getCustomerById);
-router.get("/register", customerService.getCustomerRegisterPage)
+router.get("/:id", customerService.getACustomer);
+
 router.post("/register", customerService.createACustomer);
 
 module.exports = router;

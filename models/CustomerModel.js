@@ -20,11 +20,11 @@ const customerSchema = new Schema({
             type:String,
             required : true
         },
-        phoneNumbers : [{
-            type:String
-        }]
+        phoneNumbers : {
+            type:Array
+        }
 
-},{timestamps:true});
+},{timestamps:true}); 
 
 
 const customerModel = mongoose.model('Customer', customerSchema);

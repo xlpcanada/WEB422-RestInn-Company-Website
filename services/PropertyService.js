@@ -43,123 +43,105 @@ exports.createAProperty = async(req,res)=>{
 
 
 
-exports.getAllProperty = (req,res)=>{
-    propertyModel.find()
-    .then(properties=>{
-          
-        res.joson({
-            message: "A list of all the properties.",
-            data: properties,
+exports.getAllProperty = async(req,res)=>{
+
+    const queryStringObj = {};
+
+    if(req.query.propertyType)
+    {
+        queryStringObj.propertyType = req.query.propertyType
+    }
+ 
+    if(req.query.location)
+    {
+        queryStringObj.location = req.query.location
+    }
+
+    if(req.query.bestSellers)
+    {
+        queryStringObj.bestSellers = req.query.bestSellers
+    }
+
+    try
+    {
+        const properties = await propertyModel.find(queryStringObj) //async operaiton (non-blocking)
+     
+        res.json({
+            message : "A List of property",
+            results : properties,
+            totalProperties : properties.length
         })
-    })
-    .catch(err=>{
+        
+    }
+    catch(err)
+    {
         res.status(500).json({
-            message:err
+            message :err
         })
-    });
+    }
 };
 
 
 
-exports.getPropertyTypes = (req,res)=>{
+exports.getPropertyTypes = async(req,res)=>{
 
-    propertyModel.find({}, 'propertyType')
-    .then(properties=>{
-          
-        res.joson({
-            message: `All the property types.`,
-            data: properties,
+    try
+    {
+        const properties = await propertyModel.find({},'propertyType') //async operaiton (non-blocking)
+     
+        res.json({
+            message : "A List of property types",
+            results : properties,
+            totalProperties : properties.length
         })
-    })
-    .catch(err=>{
+        
+    }
+    catch(err)
+    {
         res.status(500).json({
-            message:err
+            message :err
         })
-    })
-};
-
-
-
-exports.getPropertyByType = (req,res)=>{
-
-    propertyModel.find({propertyType: req.params.type})
-    .then(properties=>{
-          
-        res.joson({
-            message: `All the properties with the type ${req.params.type}.`,
-            data: properties,
-        })
-    })
-    .catch(err=>{
-        res.status(500).json({
-            message:err
-        })
-    })
-};
-
-
-
-
-exports.getPropertyByLocation = (req,res)=>{
-
-    propertyModel.find({location: req.params.location})
-    .then(properties=>{
-          
-        res.joson({
-            message: `All the properties with the location ${req.params.location}.`,
-            data: properties,
-        })
-    })
-    .catch(err=>{
-        res.status(500).json({
-            message:err
-        })
-    })
-};
-
-
-
-exports.getBestSellers = (req,res)=>{
-
-    propertyModel.find({bestSellers:true})
-    .then(properties=>{
-          
-        res.joson({
-            message: `All the properties marked as bestsellers.`,
-            data: properties,
-        })
-    })
-    .catch(err=>{
-        res.status(500).json({
-            message:err
-        })
-    })
+    }
 };
 
   
 
 
-exports.getPropertyById = (req,res)=>{
+exports.getAproperty =  (req,res)=>{
 
     propertyModel.findById(req.params.id)
     .then(property=>{
 
         if(property){
-            res.joson({
-                message : `Property with the id ${req.params.id}`,
-                data: property
+            res.json({
+
+                message : `property with the id ${req.params.id}`,
+                result : property
             })
         }
+
         else{
             res.status(404).json({
-                message: `There is no such property with the id ${req.params.id} in our database.`
+                message : `There is no property in our database with the id ${req.params.id}`
             })
         }
     })
+
     .catch(err=>{
-        res.status(500).json({
-            message:err
-          })
+
+        if(err.name==="CastError" && err.kind==="ObjectId")
+        {
+            res.status(404).json({
+                message : `There is no property in our database with the id ${req.params.id}`
+            })
+        }
+
+        else
+        {
+            res.status(500).json({
+                message :err
+            })
+        }
     })
 };
 
@@ -168,39 +150,53 @@ exports.getPropertyById = (req,res)=>{
 
 exports.updateAProperty = (req,res)=>{
 
-    propertyModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    propertyModel.findByIdAndUpdate(req.params.id, req.body, {new :true})
     .then(property=>{
 
         if(property){
-            res.joson({
-                message : `Property with the id ${req.params.id} was updated`,
-                data: property
+            res.json({
+                message : `The property with the id ${req.params.id} was updated`,
+                result : property
             })
+
         }
+
         else{
             res.status(404).json({
-                message: `There is no such property with the id ${req.params.id} in our database.`
+                message : `The property with ID ${req.params.id} was not found`
             })
         }
+
     })
     .catch(err=>{
         res.status(500).json({
-            message:err
-          })
+            message :err
+        })
     })
 };
-
 
 
 
 exports.deleteAProperty = (req,res)=>{
 
     propertyModel.findByIdAndRemove(req.params.id)
-    .then(()=>{
+    .then((property)=>{
 
-        res.json({
-            message: `The property with the id ${req.params.id} was deleted.`
-        })
+        if(property)
+        {
+            res.json({
+                message: `The property with the ID ${req.params.id} was deleted`
+            })
+        }
+
+        else
+        {
+            res.status(404).json({
+                message : `property with ID ${req.params.id} was not found`
+            })
+        }
+
+
     })
     .catch(err=>{
         res.status(500).json({

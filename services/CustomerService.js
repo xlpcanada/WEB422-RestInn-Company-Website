@@ -13,15 +13,6 @@ app.use(express.urlencoded({extended:true}));
 
 
 
-exports.getCustomerRegisterPage = ()=>{
-    res.json({
-        messsage: `Customer register page.`
-    })
-};
-
-
-
-
 exports.createACustomer = async(req,res)=>{
 
 
@@ -69,27 +60,37 @@ exports.createACustomer = async(req,res)=>{
 
 
 
-exports.getCustomerById = (req,res)=>{
+exports.getACustomer =  (req,res)=>{
 
     customerModel.findById(req.params.id)
     .then(customer=>{
-
+      
         if(customer){
-            res.joson({
-                message : `Customer with the id ${req.params.id}`,
-                data: customer
+            res.json({
+                message : `customer with the id ${req.params.id}`,
+                result : customer
             })
         }
+
         else{
             res.status(404).json({
-                message: `There is no such customer with the id ${req.params.id} in our database.`
+                message : `There is no customer in our database with the id ${req.params.id}`
             })
         }
     })
+
     .catch(err=>{
-        res.status(500).json({
-            message:err
-          })
+        if(err.name==="CastError" && err.kind==="ObjectId"){
+
+            res.status(404).json({
+                message : `There is no customer in our database with the id ${req.params.id}`
+            })
+        }
+        else{
+            res.status(500).json({
+                message :err
+            })
+        }
     })
 
 };

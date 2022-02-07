@@ -10,16 +10,10 @@ router.post("/", propertyService.createAProperty);
 
 router.get("/", propertyService.getAllProperty);
 
-router.get("/types", propertyService.getPropertyTypes);
-
-router.get("/:type", propertyService.getPropertyByType);
-
-router.get("/:location", propertyService.getPropertyByLocation);
-
-router.get("/bestSellers", propertyService.getBestSellers);
+router.get("/propertyType", propertyService.getPropertyTypes);
 
 
-router.get("/:id", propertyService.getPropertyById);
+router.get("/:id", propertyService.getAproperty);
 
 router.put("/:id", propertyService.updateAProperty);
 

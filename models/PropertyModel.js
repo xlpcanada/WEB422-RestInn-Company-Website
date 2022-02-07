@@ -3,15 +3,12 @@ const { Schema } = mongoose;
 
 const propertySchema = new Schema({
 
-        id:{
-            type: Object
-        },
         propertyTitle : {
             type:String,
             required : true     
         },
         propertyRentalPrice : {
-            type: String,
+            type: Number,
             required : true
         },
 
@@ -23,12 +20,12 @@ const propertySchema = new Schema({
             type:String,
             required : true
         },
-        houseRules : [{
-            type:String
-        }],
-        amenities : [{
-            type:String
-        }],
+        houseRules : {
+            type : Array 
+        },
+        amenities : {
+            type: Array
+        },
         bestSellers : {
             type: Boolean
         },
