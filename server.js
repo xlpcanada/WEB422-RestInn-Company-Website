@@ -2,7 +2,7 @@
 * 
 *  Name: Liping Xiang  Student ID: 139947196  
 *
-*  Heroku Link: https://intense-caverns-30863.herokuapp.com
+*  Heroku Link: https://immense-temple-82918.herokuapp.com/
 *
 ********************************************************************************/ 
 
@@ -32,8 +32,8 @@ app.use(express.json());
 
 //-------------------------------routes----------------------------------------
 app.use("/customers",customerController);
-//app.use("/properties",propertyController);
-app.use("/",propertyController);
+app.use("/properties",propertyController);
+
 
 //all the other undefined routes
 app.use((req, res) => {
