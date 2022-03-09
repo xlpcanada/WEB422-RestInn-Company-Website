@@ -12,6 +12,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const customerController = require("./controllers/CustomerController.js");
 const propertyController = require("./controllers/PropertyController.js");
+const propertyService = require("./services/PropertyService.js");
 //const { hydrate } = require("./models/PropertyModel.js");
  
 
@@ -33,7 +34,7 @@ app.use(express.json());
 //-------------------------------routes----------------------------------------
 app.use("/customers",customerController);
 app.use("/properties",propertyController);
-app.use("/",propertyController);
+app.use("/",propertyService.getAllProperty);
 
 
 //all the other undefined routes
