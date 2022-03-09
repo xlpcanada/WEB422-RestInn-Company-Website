@@ -1,14 +1,15 @@
 {
-  "name": "AssignmentWorkingOn",
+  "name": "assignmentworkingon",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple RESTful API that allows an administrator to create, read, edit and delete RestInn company's users and properties .",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Liping Xiang",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,5 +20,13 @@
   "devDependencies": {
     "dotenv": "^16.0.0",
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xlpcanada/WEB422-RestInn-Company-Website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xlpcanada/WEB422-RestInn-Company-Website/issues"
+  },
+  "homepage": "https://github.com/xlpcanada/WEB422-RestInn-Company-Website#readme"
 }
