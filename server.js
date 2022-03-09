@@ -32,7 +32,7 @@ app.use(express.json());
 
 //-------------------------------routes----------------------------------------
 app.use("/customers",customerController);
-app.use("/properties",propertyController);
+//app.use("/properties",propertyController);
 app.use("/",propertyController);
 
 //all the other undefined routes
