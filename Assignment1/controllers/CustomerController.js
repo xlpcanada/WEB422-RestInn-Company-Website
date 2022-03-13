@@ -5,9 +5,9 @@ const customerService = require("../services/CustomerService.js");
 
 const { createCustomerValidation} = require("../middleware/customerValidation.js");
 
-
+router.post("/register", createCustomerValidation, customerService.createACustomer);
 router.get("/:id", customerService.getACustomer);
 
-router.post("/register", createCustomerValidation, customerService.createACustomer);
+
 
 module.exports = router;

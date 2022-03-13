@@ -16,10 +16,11 @@ const propertyService = require("./services/PropertyService.js");
 //const { hydrate } = require("./models/PropertyModel.js");
  const cors = require('cors')
 
-if(process.env.NODE_ENV!=="production")
+ MONGO_DB_CONNECTION = "mongodb+srv://xlpcanada:Xiang800322072@restinnltd.d5a2p.mongodb.net/RestInnLtd?retryWrites=true&w=majority";
+/*if(process.env.NODE_ENV!=="production")
 {
     require("dotenv").config({path :"config/keys.env"});
-}
+}*/
 
 
 const app = express();
@@ -53,7 +54,7 @@ app.listen(PORT, async()=>{
 
     try
     {
-        await  mongoose.connect(process.env.MONGO_DB_CONNECTION)
+        await  mongoose.connect(MONGO_DB_CONNECTION)
   
         console.log(`You are now connected to MongoDB`);
     }
